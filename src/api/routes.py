@@ -436,9 +436,12 @@ def login():
   
     
     print(user.serialize())
+
+    results = list(map(lambda item: {"id": item.serialize()["id"],"nombre_huerta": item.serialize()["nombre_huerta"]} , user.favoritos))
+
     access_token = create_access_token(identity=email)
     
-    return jsonify({"access_token":access_token, "user_id":user.id, "productor":user.serialize()["productor"], "info_productor":user.serialize()["info_productor"], "favoritos":user.serialize()["favoritos"]})
+    return jsonify({"access_token":access_token, "user_id":user.id, "productor":user.serialize()["productor"], "info_productor":user.serialize()["info_productor"], "favoritos":results})
 
 
 
@@ -555,7 +558,6 @@ def send_mail():
         return jsonify(response_body), 200
     
     # -------------------- FAVORITOS --------------------
-
 @api.route('/users/<int:id>', methods=['PUT'])
 def edit_user_fav(id):
 
@@ -590,7 +592,3 @@ def edit_user_fav(id):
     print("usuario.favoritos despues de actualizar:",usuario.favoritos)
 
     return jsonify(usuario.serialize()), 200
-
-
-
-
