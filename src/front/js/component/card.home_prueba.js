@@ -27,6 +27,7 @@ export const Card_P = (props,{ hasSearched }) => {
 
         } else (
             favs = favs.filter((item) => item.nombre_huerta !== nombre_huerta)
+            // favs = favs.filter((item) => item.id !== id)
         )
      
         actions.addFavorito(favs)

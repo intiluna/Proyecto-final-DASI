@@ -51,7 +51,8 @@ export const Navbar = () => {
 		console.log("funciona")
 	}
 
-
+console.log(store.favoritos);
+        
 
 	useEffect(() => {
 
@@ -61,7 +62,6 @@ export const Navbar = () => {
         const storedObject = JSON.parse(storedJsonString);
         actions.addFavorito(storedObject)}
 
-        
         // console.log(localStorage);
 	}, []);
 

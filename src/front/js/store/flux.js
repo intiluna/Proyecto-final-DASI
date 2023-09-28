@@ -90,30 +90,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 
 			// ---------------------------------- FAVORITOS -----------------------
+			add_fav: async () => {
+				let user_id = localStorage.getItem("user_id")
+				let list_fav= getStore().favoritos.map((item)=>item.id)
+				try {
+
+					let data = await axios.put(process.env.BACKEND_URL + `/api/users/${user_id}`, {
+						favoritos: list_fav
+
+					})
+
+					console.log(data);
+
+					return true;
+
+				} catch (error) {
+
+					console.log(error);
+
+					return false;
+
+				}
+			},
 
 			addFavorito: (favs) => {
 				setStore({ favoritos: favs})
 			},
-			// addFavorito: async (favs) => {
-			// 	try {
-
-			// 		let data = await axios.post(process.env.BACKEND_URL + '/users', {
-			// 			favoritos: favs
-
-			// 		})
-			// 		console.log(data);
-			// 		setStore({ favoritos: data.data.favoritos })
-
-			// 		return true;
-
-			// 	} catch (error) {
-
-			// 		console.log(error);
-
-			// 		return false;
-
-			// 	}
-			// },
 
 			removeFav: (e, el) => {
 				e.stopPropagation()
@@ -381,7 +383,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// -------------------------- LOG IN & LOG OUT --------------------------
 
-			logout: () => {
+			logout:  () => {
+				getActions().add_fav()
 				localStorage.removeItem("token")
 				setStore({ log: false })
 				setStore({ is_productor: false })
