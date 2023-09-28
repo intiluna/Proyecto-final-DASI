@@ -20,37 +20,11 @@ class User(db.Model):
     #username = db.Column(db.String(20), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    
-    #is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    #funcionaba en otro repo de diagrama
-    #comunidad_autonoma_id = db.Column(db.Integer, db.ForeignKey('comunidades_autonomas.id'),nullable=False)
-    #provincia_id = db.Column(db.Integer, db.ForeignKey('provincias.id'),nullable=False)
     #one2one relationship with perfil_productor
     productor = db.relationship("PerfilProductor", uselist=False,back_populates="user")
     #many2many relationship with favoritos
     favoritos = db.relationship('PerfilProductor', secondary=user_productor, backref='users')
     pedido = db.relationship('Pedido', backref='users', lazy=True)
-
-    #     __tablename__ = 'users'
-    # id = db.Column(db.Integer, primary_key=True)
-    # nombre = db.Column(db.String(20), unique=False, nullable=False)
-    # apellido = db.Column(db.String(50), unique=False, nullable=False)
-    # password = db.Column(db.String(80), unique=False, nullable=False)
-    # email = db.Column(db.String(120), unique=True, nullable=False)
-    # direccion = db.Column(db.String(120), unique=False, nullable=False)
-    # telefono = db.Column(db.Integer, unique=True, nullable=False)
-    # codigo_postal = db.Column(db.Integer, unique=False, nullable=False)
-    # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    # #funcionaba en otro repo de diagrama
-    # comunidad_autonoma_id = db.Column(db.Integer, db.ForeignKey('comunidades_autonomas.id'),nullable=False)
-    # provincia_id = db.Column(db.Integer, db.ForeignKey('provincias.id'),nullable=False)
-    # #one2one relationship with perfil_productor
-    # productor = db.relationship("PerfilProductor", uselist=False,back_populates="user")
-    # #many2many relationship with favoritos
-    # favoritos = db.relationship('PerfilProductor', secondary=user_productor, backref='users')
-    # lista = db.relationship('Lista', backref='users', lazy=True)
-
-
 
     def __repr__(self):
         return f"<User {self.email}>"

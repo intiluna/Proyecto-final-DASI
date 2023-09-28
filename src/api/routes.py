@@ -561,37 +561,36 @@ def edit_user_fav(id):
 
     body = request.get_json(force=True) #{ 'username': 'new_username'}
     usuario = User.query.filter_by(id=id).first()
-    # id = body ['id']
+    if not usuario:
+        return jsonify({"error": "User not found"}), 404
     
-    # usuario = User.query.get(id)
-    # usuario.favoritos = body["favoritos"]
+    #usuario.favoritos = body["favoritos"]
     print(body["favoritos"])
+    print("usuario.favoritos antes de actualizar:",usuario.favoritos)
+        # db.session.commit()
+    #return jsonify(usuario.serialize()), 200
+    #return jsonify(body), 200
     
+    # Clear the current favoritos
+    usuario.favoritos.clear()
 
+    # Add new favoritos based on the ID
+    new_favoritos_ids = body.get("favoritos", [])
+    for fav_id in new_favoritos_ids:
+        favorito = PerfilProductor.query.filter_by(id=fav_id).first()
+        if favorito:
+            usuario.favoritos.append(favorito)
+        else:
+            return jsonify({"error": f"Favorito with ID {fav_id} not found"}), 404
 
-    # db.session.commit()
+    db.session.commit()
 
+    usuario = User.query.filter_by(id=id).first()
+
+    print("usuario.favoritos despues de actualizar:",usuario.favoritos)
 
     return jsonify(usuario.serialize()), 200
-# @api.route('/users', methods=['POST'])
-# def add_favorito():
-
-#     request_body = request.get_json(force=True)
-
-#     favorito = User(favoritos=request_body['favs'])
-#     # favorito = User(favoritos={
-#     #                             "id": request_body['id'], 
-#     #                             "nombre_huerta": request_body['nombre_huerta']
-#     #                            })
-    
-
-#     db.session.add(favorito)
-#     db.session.commit()
 
 
-#     response_body = {
-#         'msg':'ok',
-#         "results": ['Favorito Created', favorito.serialize()]
-#     }
 
-#     return jsonify({"favoritos":user.serialize()["favoritos"]}), 200
+
