@@ -1,4 +1,26 @@
-# WebApp boilerplate with React JS and Flask API
+# DeLaHuerta Web APP
+
+Goal: Connecting small local farmers with consumers.
+Roles: Farmer and consumer
+
+Functionalities:
+- People can signup as farmers and post products for the month, location and time where to find.
+- Consumer can look for farmers depending on location, product, production type (organic, ecological, conventional)
+- Consumer can see farmer details and contact them using whatssap
+- People can recover their passport
+- Map shows farmers locations based on GeoPy Nominatim decoding coordinates from address
+- Information is saved in postgress using SQL Alchemy to create database (db) model  and db interaction
+
+Project was started using  WebApp boilerplate with React JS and Flask API
+
+Authors:
+
+- Inti Luna
+- Daniel Carrion
+- Sergio Reverte
+- Angelica Zambrano
+
+Below information coming from template:
 
 Build web applications using React.js for the front end and python/flask for your backend API.
 
